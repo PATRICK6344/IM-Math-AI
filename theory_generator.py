@@ -1,26 +1,13 @@
 import random
 
-
 class TheoryGenerator:
     def __init__(self, knowledge=None):
         self.knowledge = knowledge
 
     def generate(self, context=None):
-        concepts = [
-            "symmetry",
-            "continuity",
-            "polynomial",
-            "matrix",
-            "topology",
-            "modularity",
-            "measure",
-            "duality",
-            "invariance",
-            "dynamics",
-        ]
+        concepts = ["symmetry", "continuity", "matrix", "polynomial", "topology", "modularity", "duality", "measure"]
         if context and isinstance(context, list):
             concepts = context[:6]
-
         a, b, c = random.sample(concepts, 3)
         templates = [
             f"A new invariant linking {a} and {b} under the action of {c}.",
@@ -33,19 +20,11 @@ class TheoryGenerator:
     def generate_from_memory(self):
         if self.knowledge is None:
             return "No memory available."
-        topics = self.knowledge.get_topics()
-        if not topics:
-            return "No concepts available."
-
-        # Build a lightweight concept pool
-        pool = []
-        for topic in topics:
-            rows = self.knowledge.search(topic, limit=3)
-            for row in rows:
-                pool.append(row["concept"])
-
-        if not pool:
-            return "No concepts available."
-
-        context = list(dict.fromkeys(pool))[:6]
-        return self.generate(context=context)
+        rows = self.knowledge.search("", limit=10)
+        concepts = []
+        for row in rows:
+            if row.get("concept"):
+                concepts.append(row["concept"])
+        if not concepts:
+            return "A generalized theorem linking structure and continuity across symbolic systems."
+        return self.generate(context=list(dict.fromkeys(concepts))[:6])
