@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">IM Pro Max</string>
+    <string name="app_description">Offline Mathematics AI</string>
+    <string name="app_tagline">Learn. Solve. Discover.</string>
 </resources>

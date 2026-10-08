@@ -13,6 +13,10 @@
 # Keep Android classes
 -keep class androidx.** { *; }
 -keepclassmembers class androidx.** { *; }
+-keep interface androidx.** { *; }
+
+# Keep support library
+-keep class android.support.** { *; }
 
 # Remove logging
 -assumenosideeffects class android.util.Log {
@@ -24,3 +28,15 @@
 # Optimize
 -optimizationpasses 5
 -dontusemixedcaseclassnames
+-verbose
+
+# Keep native methods
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# Keep enums
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}

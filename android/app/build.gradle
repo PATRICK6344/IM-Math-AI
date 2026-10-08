@@ -30,11 +30,21 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            storeFile file('im_keystore.jks')
+            storePassword System.getenv('KEYSTORE_PASSWORD') ?: 'password'
+            keyAlias System.getenv('KEY_ALIAS') ?: 'im_key'
+            keyPassword System.getenv('KEY_PASSWORD') ?: 'password'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             debuggable true
@@ -56,4 +66,6 @@ dependencies {
     implementation 'com.chaquo.python:python:3.11'
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.6.1'
 }

@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText chatInput;
     private Button sendButton;
     private Button learnBtn, solveBtn, theoryBtn;
+    private ProgressBar modelLoadingProgress;
 
     private final List<ChatMessage> messages = new ArrayList<>();
     private ChatAdapter chatAdapter;
@@ -36,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
             IMService.LocalBinder binder = (IMService.LocalBinder) service;
             imService = binder.getService();
             bound = true;
-            addAiMessage("IM Pro Max online. Local model loading...");
+            modelLoadingProgress.setVisibility(ProgressBar.GONE);
+            addAiMessage("IM Pro Max ready! 🚀\nUse me to solve equations, learn concepts, or explore new theories.");
         }
 
         @Override
@@ -56,10 +60,14 @@ public class MainActivity extends AppCompatActivity {
         learnBtn = findViewById(R.id.learnBtn);
         solveBtn = findViewById(R.id.solveBtn);
         theoryBtn = findViewById(R.id.theoryBtn);
+        modelLoadingProgress = findViewById(R.id.modelLoadingProgress);
 
         chatAdapter = new ChatAdapter(messages);
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         chatRecyclerView.setAdapter(chatAdapter);
+
+        modelLoadingProgress.setVisibility(ProgressBar.VISIBLE);
+        addAiMessage("Loading model...");
 
         Intent intent = new Intent(this, IMService.class);
         bindService(intent, connection, Context.BIND_AUTO_CREATE);
@@ -76,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
             appendUserMessage(fact);
             chatInput.setText("");
+            hideKeyboard();
 
             new Thread(() -> {
                 String response = imService.learnFact(fact);
@@ -86,12 +95,13 @@ public class MainActivity extends AppCompatActivity {
         solveBtn.setOnClickListener(v -> {
             String expr = chatInput.getText().toString().trim();
             if (expr.isEmpty()) {
-                Toast.makeText(this, "Enter an equation.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Enter an equation (e.g., x^2 - 5x + 6 = 0).", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             appendUserMessage(expr);
             chatInput.setText("");
+            hideKeyboard();
 
             new Thread(() -> {
                 String response = imService.solveEquation(expr);
@@ -100,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         theoryBtn.setOnClickListener(v -> {
+            appendUserMessage("Generate a theory...");
             new Thread(() -> {
                 String response = imService.generateTheory();
                 runOnUiThread(() -> addAiMessage(response));
@@ -113,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
         appendUserMessage(message);
         chatInput.setText("");
+        hideKeyboard();
 
         new Thread(() -> {
             String response = imService.chatWithAI(message);
@@ -130,6 +142,13 @@ public class MainActivity extends AppCompatActivity {
         messages.add(new ChatMessage(text, ChatMessage.SENDER_AI));
         chatAdapter.notifyItemInserted(messages.size() - 1);
         chatRecyclerView.scrollToPosition(messages.size() - 1);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null && getCurrentFocus() != null) {
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
 
     @Override

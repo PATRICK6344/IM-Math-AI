@@ -4,31 +4,57 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#0d1117"
-    android:padding="12dp">
+    android:padding="0dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="IM Pro Max"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="#00ff88"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        android:background="#161b22"
         android:gravity="center"
-        android:padding="12dp"/>
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IM Pro Max"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#00ff88"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Learn. Solve. Discover."
+            android:textSize="12sp"
+            android:textColor="#8b949e"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/modelLoadingProgress"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:indeterminate="true"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/progress_bar"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#161b22"
+        android:background="#0d1117"
         android:padding="8dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#1f2937"
+        android:background="#161b22"
         android:padding="8dp">
 
         <EditText
@@ -36,17 +62,19 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="Type your message..."
+            android:hint="Ask me anything..."
             android:textColor="#ffffff"
-            android:textColorHint="#8b949e"
+            android:textColorHint="#6e7681"
             android:background="#0d1117"
-            android:padding="10dp"/>
+            android:padding="12dp"
+            android:textSize="14sp"/>
 
         <Button
             android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:text="Send"
+            android:text="→"
+            android:textSize="20sp"
             android:textColor="#000000"
             android:background="#00ff88"
             android:layout_marginLeft="8dp"/>
@@ -56,38 +84,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="8dp">
+        android:background="#161b22"
+        android:padding="6dp">
 
         <Button
             android:id="@+id/learnBtn"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="Learn"
+            android:text="📚 Learn"
             android:background="#00ff88"
             android:textColor="#000000"
-            android:layout_marginRight="4dp"/>
+            android:textSize="12sp"
+            android:layout_marginRight="3dp"/>
 
         <Button
             android:id="@+id/solveBtn"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="Solve"
+            android:text="🧮 Solve"
             android:background="#00ff88"
             android:textColor="#000000"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"/>
+            android:textSize="12sp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"/>
 
         <Button
             android:id="@+id/theoryBtn"
             android:layout_width="0dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="Theory"
+            android:text="💡 Theory"
             android:background="#00ff88"
             android:textColor="#000000"
-            android:layout_marginLeft="4dp"/>
+            android:textSize="12sp"
+            android:layout_marginLeft="3dp"/>
     </LinearLayout>
 
 </LinearLayout>
