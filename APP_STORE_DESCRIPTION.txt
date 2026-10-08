@@ -1,0 +1,15 @@
+IM Pro Max
+Offline Mathematics AI
+Learn. Solve. Discover.
+
+IM Pro Max is an offline mathematics AI designed to help users solve equations, explain mathematical concepts, and generate ideas for further exploration.
+
+Features:
+- Solve equations and symbolic expressions
+- Explain topics like calculus, algebra, geometry, and topology
+- Generate mathematical theories and conjectures
+- Learn from local knowledge stored on-device
+- Work offline after the model is downloaded
+- Run as a local AI assistant on Android
+
+Perfect for students, researchers, and math enthusiasts.
